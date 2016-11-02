@@ -61,9 +61,9 @@ public class ContactRepositoryImpl implements ContactRepository {
     public List<Contact> getFiltered(String fName, String lName, String mPhone, int userId) {
         return entityManager.createNamedQuery(Contact.GET_FILTERED, Contact.class)
                 .setParameter("userId",userId)
-                .setParameter("fName",fName)
-                .setParameter("lName",lName)
-                .setParameter("mPhone",mPhone)
+                .setParameter("fName","%" + fName + "%")
+                .setParameter("lName","%" + lName + "%")
+                .setParameter("mPhone","%" + mPhone + "%")
                 .getResultList();
     }
 

@@ -1,10 +1,14 @@
 package com.repository.user;
 
 import com.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +16,8 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public class UserRepositoryImpl implements UserRepository{
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -41,7 +47,17 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public User getByLogin(String login) {
-        return entityManager.createNamedQuery(User.BY_LOGIN, User.class).setParameter("login", login).getSingleResult();
+        User result = null;
+        try{
+            result = entityManager.createNamedQuery(User.BY_LOGIN, User.class).setParameter("login", login).getSingleResult();
+        }
+        catch (NoResultException ignored){
+            LOG.debug("There is no such user");
+        }
+        catch (EmptyResultDataAccessException e){
+            LOG.debug("Empty user");
+        }
+        return result;
     }
 
     @Override

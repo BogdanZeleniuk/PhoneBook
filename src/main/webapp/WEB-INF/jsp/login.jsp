@@ -11,7 +11,9 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form:form class="navbar-form" role="form" action="spring_security_check"
+                    <%--<c:url value="/j_spring_security_check" var="loginUrl"/>--%>
+                    <c:url value="/login" var="loginUrl"/>
+                    <form:form class="navbar-form" role="form" action="${loginUrl}"
                          method="post">
                         <div class="form-group">
                             <label for="username"> Login: </label>
@@ -26,12 +28,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                        <button type="submit" class="btn  btn-sm btn-block btn-primary">Sign in</button>
+                        <button type="submit" class="btn btn-success">Sign in</button>
                         </div>
                     </form:form>
                     <br/>
-                    <form class="navbar-form" href="register">
-                        <button class="btn btn-sm btn-block btn-primary">Register</button>
+                    <form class="navbar-form" action="<c:url value="register.jsp" />">
+                        <button class="btn btn-sm btn-block btn-primary" role="button">Register</button>
                     </form>
                 </li>
                 </ul>
@@ -40,16 +42,13 @@
 </div>
 <div class="jumbotron">
     <div class="container">
-        <c:if test="${error}">
-            <div class="error">
-                    ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-            </div>
+        <c:if test="${not empty error}">
+            <div class="error">${error}</div>
         </c:if>
-        <c:if test="${not empty message}">
-            <div class="message">
-                <spring:message code="${message}"/>
-            </div>
+        <c:if test="${not empty logout}">
+            <div class="message">${logout}</div>
         </c:if>
+
         <p>
             <br/><br/><br/><br/>
         <p>User login: <b> Bill </b></p>

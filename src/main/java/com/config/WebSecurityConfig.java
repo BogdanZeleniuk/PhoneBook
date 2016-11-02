@@ -12,23 +12,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/**").access("isAuthenticated()")
+                    .antMatchers("/**").access("IS_AUTHENTICATED_ANONYMOUSLY")
                     .antMatchers("/**").access("hasRole('ROLE_USER')")
                     .antMatchers("/login").permitAll()
-                    .antMatchers("/register").permitAll()
                     .antMatchers("/js/**", "/css/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
+                   // .loginProcessingUrl("/j_spring_security_check")
                     .failureForwardUrl("/login?error=true")
-                    .loginProcessingUrl("/spring_security_check")
                     .permitAll()
                     .and()
                 .logout()
-                    .permitAll()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/logout_sec")
+                    .permitAll();
 
     }
 }

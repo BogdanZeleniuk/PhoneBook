@@ -62,7 +62,7 @@ public class Contact extends BaseEntity{
         this(null,firstName,lastName,patronymic,mobilePhone,homePhone,address,email);
     }
 
-    public Contact( Integer id, String firstName, String lastName, String patronymic, String mobilePhone, String homePhone, String address, String email ) {
+    public Contact(Integer id, String firstName, String lastName, String patronymic, String mobilePhone, String homePhone, String address,String email ) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;

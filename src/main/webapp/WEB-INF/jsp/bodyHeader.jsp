@@ -2,7 +2,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
@@ -11,12 +10,7 @@
         <div class="collapse navbar-collapse">
             <form class="navbar-form navbar-right">
                 <li>
-                    <form:form class="navbar-form" action="logout" method="post">
-                        <sec:authorize access="isAuthenticated()">
-
-                            <input type="submit" class="btn btn-primary" value="Logout">
-                        </sec:authorize>
-                    </form:form>
+                            <a class="btn btn-primary" role="button" href="<c:url value="/logout"/>">Logout</a>
                 </li>
             </form>
         </div>
