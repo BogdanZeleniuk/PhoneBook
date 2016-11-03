@@ -27,31 +27,38 @@ public class Contact extends BaseEntity{
     public static final String ALL_SORTED = "Contact.ALL_SORTED";
     public static final String DELETE = "Contact.DELETE";
     public static final String GET_FILTERED = "Contact.GET_FILTERED";
+
     @Column(name = "first_name", nullable = false)
-    @NotEmpty(message = "NotEmpty.contactForm.firstName")
-    @Length(min = 4, message = "NotEmpty.contactForm.firstName")
+    @NotEmpty(message = "First name should not be empty")
+    @Length(min = 4, message = "More than 4 symbols")
     @JsonView(View.REST.class)
     private String firstName;
+
     @Column(name = "last_name", nullable = false)
-    @NotEmpty(message = "NotEmpty.contactForm.lastName")
-    @Length(min = 4, message = "NotEmpty.contactForm.lastName")
+    @NotEmpty(message = "Last name should not be empty")
+    @Length(min = 4, message = "More than 4 symbols")
     @JsonView(View.REST.class)
     private String lastName;
+
     @Column(name = "patronymic", nullable = false)
-    @NotEmpty
-    @Length(min = 4, message = "NotEmpty.contactForm.patronymic")
+    @NotEmpty(message = "Patronymic should not be empty")
+    @Length(min = 4, message = "More than 4 symbols")
     @JsonView(View.REST.class)
     private String patronymic;
+
     @Column(name = "mobile_phone_number", nullable = false)
-    @NotEmpty
-    @Pattern(regexp = "\\+380\\([1-9]{2}\\)[0-9]{7}", message = "NotEmpty.contactForm.mobilePhone")
+    @NotEmpty(message = "Mobile Phone should not be empty")
+    @Pattern(regexp = "\\+380\\([1-9]{2}\\)[0-9]{7}", message = "Something like +380(99)1234567")
     @JsonView(View.REST.class)
     private String mobilePhone;
+
     @Column(name = "home_phone_number")
     private String homePhone;
+
     @Column(name = "address")
     private String address;
-    @Email(message = "NotEmpty.contactForm.email")
+
+    @Email(message = "Email should not be empty")
     @Column(name = "email", nullable = false)
     @JsonView(View.REST.class)
     private String email;

@@ -9,6 +9,7 @@
 <body>
 <div class="jumbotron">
 <div class="container">
+    <div class="shadow">
         <ul class="nav navbar-nav navbar-left">
             <li>
                 <c:url value="/j_spring_security_check" var="loginUrl"/>
@@ -32,6 +33,7 @@
                 </form:form>
             </li>
         </ul>
+    </div>
     </div>
 </div>
 <div class="jumbotron">

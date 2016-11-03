@@ -11,16 +11,17 @@ public class UserDTO implements Serializable {
 
     protected Integer id;
 
-    @NotEmpty
-    @Pattern(regexp = "[a-zA-Z]", message = "NotEmpty.userForm.login")
-    @Length(min = 3, max = 50)
+    @NotEmpty (message = "Password should not be empty")
+    @Pattern(regexp = "[a-zA-Z]{3,50}", message = "Only English letters")
+    @Length(min = 3, max = 50, message = "More than 3 symbols")
     protected String login;
 
-    @Length(min = 5, max = 100, message = "NotEmpty.userForm.password")
-    @NotEmpty
+    @Length(min = 5, max = 100, message = "More than 5 symbols")
+    @NotEmpty (message = "Password should not be empty")
     private String password;
 
-    @Length(min = 5, max = 100, message = "NotEmpty.userForm.fullName")
+    @Length(min = 5, max = 100, message = "More than 5 symbols")
+    @NotEmpty (message = "Password should not be empty")
     private String fullName;
 
     public UserDTO() {
@@ -64,6 +65,7 @@ public class UserDTO implements Serializable {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
     public boolean isNew() {
         return id == null;
     }

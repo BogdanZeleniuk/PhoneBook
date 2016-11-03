@@ -1,5 +1,7 @@
 package com.model;
 
+import com.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -10,10 +12,11 @@ import javax.validation.constraints.Pattern;
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
 
-    @NotEmpty
+    @NotEmpty (message = "Password should not be empty")
     @Column(name = "login", nullable = false)
-    @Pattern(regexp = "[a-zA-Z]", message = "Choose the letters form 'a' to 'z'.")
-    @Length(min = 3, max = 50)
+    @Pattern(regexp = "[a-zA-Z]{3,50}", message = "Only English letters")
+    @Length(min = 3, max = 50, message = "More than 3 symbols")
+    @JsonView(View.REST.class)
     protected String login;
 
     public NamedEntity() {

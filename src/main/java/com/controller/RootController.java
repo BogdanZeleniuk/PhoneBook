@@ -2,13 +2,12 @@ package com.controller;
 
 import com.controller.user.AbstractUserController;
 import com.dto.UserDTO;
-import com.model.User;
+import com.dto.UserUtil;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,8 +33,11 @@ public class RootController extends AbstractUserController{
     }
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
-    public String login(Model model, @RequestParam(value = "error", required = false) boolean error){
-        model.addAttribute("error", error);
+    public String login(ModelMap model,
+                        @RequestParam(value = "error", required = false) boolean error,
+                        @RequestParam(value = "message", required = false) boolean message){
+        model.put("error", error);
+        model.put("message", message);
         return "login";
     }
 
@@ -56,18 +58,17 @@ public class RootController extends AbstractUserController{
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String saveRegister(@Valid User userDTO, BindingResult result, SessionStatus status, ModelMap model) {
+    public String saveRegister(@Valid UserDTO userDTO, BindingResult result, SessionStatus status, ModelMap model) {
         if (!result.hasErrors()) {
             try {
-                super.create(userDTO);
-                //super.create(UserUtil.createNewUserFromDTO(userDTO));
+                super.create(UserUtil.createNewUserFromDTO(userDTO));
                 status.setComplete();
-                return "redirect:login?message=app.registered";
+                return "login";
             } catch (DataIntegrityViolationException ex) {
-                result.rejectValue("Login", "---");
+                result.rejectValue("login", "User with such login is presented");
             }
         }
         model.addAttribute("register", true);
-        return "contacts";
+        return "register";
     }
 }

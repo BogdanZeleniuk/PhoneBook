@@ -38,13 +38,15 @@ public class User extends NamedEntity{
 
 
     @Column(name = "password", nullable = false)
-    @Length(min = 5, max = 100, message = "your password should have 5 or more symbols")
+    @Length(min = 5, max = 100, message = "More than 5 symbols")
     @JsonView(View.REST.class)
-    @NotEmpty
+    @NotEmpty (message = "Password should not be empty")
     private String password;
 
     @Column(name = "full_name", nullable = false)
-    @Length(min = 5, max = 100, message = "your fullName should have 5 or more symbols")
+    @Length(min = 5, max = 100, message = "More than 5 symbols")
+    @JsonView(View.REST.class)
+    @NotEmpty (message = "Password should not be empty")
     private String fullName;
 
     @Enumerated(EnumType.STRING)
@@ -105,8 +107,9 @@ public class User extends NamedEntity{
 
     @Override
     public String toString() {
-        return "User{" +
-                "password='" + password + '\'' +
+        return "User{" + "id=" + id + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", roles=" + roles +
                 '}';
