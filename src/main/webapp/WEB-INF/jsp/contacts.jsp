@@ -123,7 +123,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="control-label col-xs-3">Amount</label>
+                        <label for="email" class="control-label col-xs-3">Email</label>
 
                         <div class="col-xs-9">
                             <input type="email" class="form-control" id="email" name="email"

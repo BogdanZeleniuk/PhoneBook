@@ -10,21 +10,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                    .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/**").access("IS_AUTHENTICATED_ANONYMOUSLY")
-                    .antMatchers("/**").access("hasRole('ROLE_USER')")
                     .antMatchers("/login").permitAll()
+                    .antMatchers("/register").permitAll()
+                    .antMatchers("/**").access("hasRole('ROLE_USER')")
                     .antMatchers("/js/**", "/css/**").permitAll()
-                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
-                   // .loginProcessingUrl("/j_spring_security_check")
                     .failureForwardUrl("/login?error=true")
+                    .loginProcessingUrl("/j_spring_security_check")
+                    .defaultSuccessUrl("/contacts")
                     .permitAll()
                     .and()
                 .logout()
+                    .logoutUrl("/logout")
                     .logoutSuccessUrl("/logout_sec")
                     .permitAll();
 

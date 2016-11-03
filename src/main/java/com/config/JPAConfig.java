@@ -2,6 +2,7 @@ package com.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -60,5 +61,13 @@ public class JPAConfig {
         dataSource.setUsername( "root" );
         dataSource.setPassword( "2940063" );
         return dataSource;
+    }
+
+    @Bean(name = "messageSource")
+    public ReloadableResourceBundleMessageSource messageSource(){
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:validation");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
 }

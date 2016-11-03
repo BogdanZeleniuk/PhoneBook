@@ -2,10 +2,8 @@ package com.controller;
 
 import com.controller.user.AbstractUserController;
 import com.dto.UserDTO;
-import com.dto.UserUtil;
-import org.springframework.boot.autoconfigure.web.ErrorController;
+import com.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -23,9 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
-public class RootController extends AbstractUserController implements ErrorController {
-
-    private static final String PATH = "/error";
+public class RootController extends AbstractUserController{
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root() {
@@ -38,7 +34,6 @@ public class RootController extends AbstractUserController implements ErrorContr
     }
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
-    @PreAuthorize("hasRole('ROLE_USER')")
     public String login(Model model, @RequestParam(value = "error", required = false) boolean error){
         model.addAttribute("error", error);
         return "login";
@@ -60,16 +55,12 @@ public class RootController extends AbstractUserController implements ErrorContr
         return "register";
     }
 
-    @RequestMapping(value = PATH)
-    public String error(){
-        return "redirect:/login";
-    }
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String saveRegister(@Valid UserDTO userDTO, BindingResult result, SessionStatus status, ModelMap model) {
+    public String saveRegister(@Valid User userDTO, BindingResult result, SessionStatus status, ModelMap model) {
         if (!result.hasErrors()) {
             try {
-                super.create(UserUtil.createNewUserFromDTO(userDTO));
+                super.create(userDTO);
+                //super.create(UserUtil.createNewUserFromDTO(userDTO));
                 status.setComplete();
                 return "redirect:login?message=app.registered";
             } catch (DataIntegrityViolationException ex) {
@@ -78,10 +69,5 @@ public class RootController extends AbstractUserController implements ErrorContr
         }
         model.addAttribute("register", true);
         return "contacts";
-    }
-
-    @Override
-    public String getErrorPath() {
-        return PATH;
     }
 }

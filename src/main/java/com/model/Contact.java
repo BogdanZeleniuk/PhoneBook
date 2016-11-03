@@ -1,6 +1,8 @@
 package com.model;
 
+import com.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -26,28 +28,32 @@ public class Contact extends BaseEntity{
     public static final String DELETE = "Contact.DELETE";
     public static final String GET_FILTERED = "Contact.GET_FILTERED";
     @Column(name = "first_name", nullable = false)
-    @NotEmpty
-    @Length(min = 4)
+    @NotEmpty(message = "NotEmpty.contactForm.firstName")
+    @Length(min = 4, message = "NotEmpty.contactForm.firstName")
+    @JsonView(View.REST.class)
     private String firstName;
     @Column(name = "last_name", nullable = false)
-    @NotEmpty
-    @Length(min = 4)
+    @NotEmpty(message = "NotEmpty.contactForm.lastName")
+    @Length(min = 4, message = "NotEmpty.contactForm.lastName")
+    @JsonView(View.REST.class)
     private String lastName;
     @Column(name = "patronymic", nullable = false)
     @NotEmpty
-    @Length(min = 4)
+    @Length(min = 4, message = "NotEmpty.contactForm.patronymic")
+    @JsonView(View.REST.class)
     private String patronymic;
     @Column(name = "mobile_phone_number", nullable = false)
     @NotEmpty
-    @Pattern(regexp = "\\+380\\([1-9]{2}\\)[0-9]{7}", message = "format should be like +380(66)1234567" +
-            "")
+    @Pattern(regexp = "\\+380\\([1-9]{2}\\)[0-9]{7}", message = "NotEmpty.contactForm.mobilePhone")
+    @JsonView(View.REST.class)
     private String mobilePhone;
     @Column(name = "home_phone_number")
     private String homePhone;
     @Column(name = "address")
     private String address;
-    @Email
+    @Email(message = "NotEmpty.contactForm.email")
     @Column(name = "email", nullable = false)
+    @JsonView(View.REST.class)
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -62,7 +68,7 @@ public class Contact extends BaseEntity{
         this(null,firstName,lastName,patronymic,mobilePhone,homePhone,address,email);
     }
 
-    public Contact(Integer id, String firstName, String lastName, String patronymic, String mobilePhone, String homePhone, String address,String email ) {
+    public Contact( Integer id, String firstName,  String lastName, String patronymic, String mobilePhone, String homePhone, String address, String email ) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;

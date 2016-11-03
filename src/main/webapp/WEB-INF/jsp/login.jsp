@@ -11,8 +11,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <%--<c:url value="/j_spring_security_check" var="loginUrl"/>--%>
-                    <c:url value="/login" var="loginUrl"/>
+                    <c:url value="/j_spring_security_check" var="loginUrl"/>
                     <form:form class="navbar-form" role="form" action="${loginUrl}"
                          method="post">
                         <div class="form-group">
@@ -32,8 +31,8 @@
                         </div>
                     </form:form>
                     <br/>
-                    <form class="navbar-form" action="<c:url value="register.jsp" />">
-                        <button class="btn btn-sm btn-block btn-primary" role="button">Register</button>
+                    <form class="navbar-form">
+                            <a class="btn btn-sm btn-block btn-primary" role="button" href="register">Register</a>
                     </form>
                 </li>
                 </ul>
@@ -43,10 +42,9 @@
 <div class="jumbotron">
     <div class="container">
         <c:if test="${not empty error}">
-            <div class="error">${error}</div>
-        </c:if>
-        <c:if test="${not empty logout}">
-            <div class="message">${logout}</div>
+            <div class="error">
+                    ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+            </div>
         </c:if>
 
         <p>

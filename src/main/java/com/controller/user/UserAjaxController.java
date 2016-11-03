@@ -1,9 +1,5 @@
 package com.controller.user;
 
-import com.View;
-import com.dto.UserDTO;
-import com.dto.UserUtil;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.model.User;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +15,13 @@ import java.util.List;
 public class UserAjaxController extends AbstractUserController{
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(View.UI.class)
+    //@JsonView(View.UI.class)
     public List<User> getAll() {
         return super.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(View.UI.class)
+   // @JsonView(View.UI.class)
     public User get(@PathVariable("id") int id) {
         return super.get(id);
     }
@@ -36,11 +32,13 @@ public class UserAjaxController extends AbstractUserController{
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createOrUpdate(@Valid UserDTO userTo) {
+    public void createOrUpdate(@Valid User userTo) {
             if (userTo.isNew()) {
-                super.create(UserUtil.createNewUserFromDTO(userTo));
+                super.create(userTo);
+                //super.create(UserUtil.createNewUserFromDTO(userTo));
             } else {
-                super.update(userTo);
+                super.update(userTo, userTo.getId());
+                //super.update(userTo);
             }
     }
 }

@@ -1,6 +1,8 @@
 package com.controller.contact;
 
 import com.AuthorizedUser;
+import com.dto.ContactDTO;
+import com.dto.ContactUtil;
 import com.model.Contact;
 import com.service.contact.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,9 @@ public abstract class AbstractContactController {
         service.delete(id, userId);
     }
 
-    public List<Contact> getAll() {
+    public List<ContactDTO> getAll() {
         int userId = AuthorizedUser.id();
-        return service.getAll(userId);
+        return ContactUtil.getContactDTOFromContact(service.getAll(userId));
     }
 
     public void update(Contact contact, int id) {
@@ -33,17 +35,18 @@ public abstract class AbstractContactController {
         service.update(contact, userId);
     }
 
+
     public Contact create(Contact contact) {
         contact.setId(null);
         int userId = AuthorizedUser.id();
         return service.save(contact, userId);
     }
 
-    public List<Contact> getFiltered(String fName, String lName, String mPhone) {
+    public List<ContactDTO> getFiltered(String fName, String lName, String mPhone) {
         int userId = AuthorizedUser.id();
-        return service.getFiltered(fName != null ? fName : "",
+        return ContactUtil.getContactDTOFromContact(service.getFiltered(fName != null ? fName : "",
                                    lName != null ? lName : "",
-                                   mPhone != null ? mPhone : "", userId);
+                                   mPhone != null ? mPhone : "", userId));
     }
 
 }

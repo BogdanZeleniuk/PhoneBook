@@ -1,5 +1,6 @@
 package com.controller.contact;
 
+import com.dto.ContactDTO;
 import com.model.Contact;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,11 @@ import java.util.List;
 public class ContactAjaxController extends AbstractContactController{
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Contact> getAll() {
+    public List<ContactDTO> getAll() {
         return super.getAll();
     }
 
-    @RequestMapping(value = "/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Contact get(@PathVariable("id") int id) {
         return super.get(id);
     }
@@ -36,7 +37,7 @@ public class ContactAjaxController extends AbstractContactController{
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Contact> getFiltered(
+    public List<ContactDTO> getFiltered(
             @RequestParam(value = "fName", required = false) String fName,
             @RequestParam(value = "lName", required = false) String lName,
             @RequestParam(value = "mPhone", required = false) String mPhone) {

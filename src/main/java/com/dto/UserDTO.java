@@ -12,15 +12,15 @@ public class UserDTO implements Serializable {
     protected Integer id;
 
     @NotEmpty
-    @Pattern(regexp = "[a-zA-Z]", message = "Choose the letters form 'a' to 'z'.")
+    @Pattern(regexp = "[a-zA-Z]", message = "NotEmpty.userForm.login")
     @Length(min = 3, max = 50)
     protected String login;
 
-    @Length(min = 5, max = 100, message = "your password should have 5 or more symbols")
+    @Length(min = 5, max = 100, message = "NotEmpty.userForm.password")
     @NotEmpty
     private String password;
 
-    @Length(min = 5, max = 100, message = "your fullName should have 5 or more symbols")
+    @Length(min = 5, max = 100, message = "NotEmpty.userForm.fullName")
     private String fullName;
 
     public UserDTO() {
