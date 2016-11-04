@@ -16,4 +16,9 @@ public class ContactUtil {
                 contact.getLastName(), contact.getPatronymic(),
                 contact.getMobilePhone(), contact.getHomePhone(), contact.getAddress(), contact.getEmail());
     }
+
+    public static Contact createNewContactFromDTO(ContactDTO newContact) {
+        return new Contact(null, newContact.getFirstName(), newContact.getLastName(), newContact.getPatronymic(),
+                newContact.getMobilePhone(), newContact.getHomePhone(), newContact.getAddress(), newContact.getEmail());
+    }
 }

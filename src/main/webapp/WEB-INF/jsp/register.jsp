@@ -13,22 +13,24 @@
         <ul class="nav navbar-nav navbar-left">
             <li>
                 <c:url value="/j_spring_security_check" var="loginUrl"/>
-                <form:form class="navbar-form" role="form" action="${loginUrl}"
+                <form:form class="form-horizontal" role="form" action="${loginUrl}"
                            method="post">
                     <div class="form-group">
-                        <label for="username"> Login: </label>
-                        <div class="col-sm-3">
+                        <label class="control-label col-sm-1" for="username"> Login: </label>
+                        <div class="col-sm-11">
                             <input type="text" placeholder="Login" class="form-control" name='username' id="username">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="password"> Password: </label>
-                        <div class="col-sm-3">
+                        <label class="control-label col-sm-1" for="password"> Password: </label>
+                        <div class="col-sm-11">
                             <input type="password" placeholder="Password" class="form-control" name='password' id="password">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success">Sign in</button>
+                        <div class="col-lg-3">
+                            <button type="submit" class="btn btn-info">Sign in</button>
+                        </div>
                     </div>
                 </form:form>
             </li>
@@ -50,8 +52,8 @@
                     <lardi:inputField label="Password" name="password" inputType="password"/>
 
                     <div class="form-group">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-success">Add</button>
+                        <div class="col-sm-9">
+                            <button type="submit" class="btn btn-info">Add new User</button>
                         </div>
                     </div>
                 </form:form>
