@@ -27,7 +27,7 @@ import java.util.Set;
         @NamedQuery(name = User.ALL_SORTED, query = "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.login"),
 })
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "login", name = "users_unique_login_idx")})
+@Table(name = "users")
 public class User extends NamedEntity{
 
     public static final String GRAPH_WITH_ROLES = "User.WithRoles";

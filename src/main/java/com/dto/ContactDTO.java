@@ -1,11 +1,13 @@
 package com.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ContactDTO {
 
     private Integer id;
@@ -32,6 +34,9 @@ public class ContactDTO {
 
     @Email(message = "Email should not be empty")
     private String email;
+
+    public ContactDTO() {
+    }
 
     public ContactDTO( Integer id, String firstName, String lastName, String patronymic, String mobilePhone, String homePhone, String address, String email ) {
         this.id = id;

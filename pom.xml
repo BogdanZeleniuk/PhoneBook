@@ -133,5 +133,11 @@
             <artifactId>datatables</artifactId>
             <version>${webjars-datatables.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>4.1.1.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

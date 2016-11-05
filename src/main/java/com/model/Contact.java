@@ -2,6 +2,7 @@ package com.model;
 
 import com.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -13,14 +14,15 @@ import javax.validation.constraints.Pattern;
 
 @NamedQueries({
         @NamedQuery(name = Contact.GET, query = "SELECT cont FROM Contact cont WHERE cont.id=:id AND cont.user.id=:userId"),
-        @NamedQuery(name = Contact.ALL_SORTED, query = "SELECT cont FROM Contact cont WHERE cont.user.id=:userId ORDER BY cont.firstName DESC"),
+        @NamedQuery(name = Contact.ALL_SORTED, query = "SELECT cont FROM Contact cont WHERE cont.user.id=:userId"),
         @NamedQuery(name = Contact.DELETE, query = "DELETE FROM Contact cont WHERE cont.id=:id AND cont.user.id=:userId"),
         @NamedQuery(name = Contact.GET_FILTERED, query = "SELECT cont FROM Contact cont WHERE cont.user.id=:userId " +
                 "AND cont.firstName LIKE :fName AND cont.lastName LIKE :lName " +
-                "AND cont.mobilePhone LIKE :mPhone ORDER BY cont.firstName DESC"),
+                "AND cont.mobilePhone LIKE :mPhone"),
 })
 @Entity
 @Table(name = "contacts")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Contact extends BaseEntity{
 
     public static final String GET = "Contact.GET";

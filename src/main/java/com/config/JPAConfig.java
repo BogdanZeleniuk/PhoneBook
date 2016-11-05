@@ -1,10 +1,14 @@
 package com.config;
 
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -35,7 +39,7 @@ public class JPAConfig {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
     }
@@ -69,5 +73,24 @@ public class JPAConfig {
         messageSource.setBasename("classpath:validation");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
+    }
+
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(DataSource dataSource){
+        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+        dataSourceInitializer.setDataSource(dataSource);
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+        databasePopulator.addScript(new ClassPathResource("initDB.sql"));
+        databasePopulator.addScript(new ClassPathResource("data.sql"));
+        dataSourceInitializer.setDatabasePopulator(databasePopulator);
+        dataSourceInitializer.setEnabled(true);
+        return dataSourceInitializer;
+    }
+
+    @Bean
+    public static PropertyPlaceholderConfigurer placeHolderConfigurer(){
+        final PropertyPlaceholderConfigurer props = new PropertyPlaceholderConfigurer();
+        props.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE );
+        return props;
     }
 }

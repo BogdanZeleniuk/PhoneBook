@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS user_roles;
-DROP TABLE IF EXISTS contacts;
-DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -10,7 +7,6 @@ CREATE TABLE IF NOT EXISTS users
   full_name VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX users_unique_login_idx ON users (login);
 
 CREATE TABLE IF NOT EXISTS user_roles
 (

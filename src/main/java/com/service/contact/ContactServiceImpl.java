@@ -1,5 +1,6 @@
 package com.service.contact;
 
+import com.controller.exception.ExceptionUtil;
 import com.model.Contact;
 import com.repository.contact.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,13 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public Contact get(int id, int userId) {
-        return repository.get(id, userId);
+
+        return ExceptionUtil.checkNotFoundWithId(repository.get(id, userId), id);
     }
 
     @Override
     public void delete(int id, int userId) {
-        repository.delete(id, userId);
+        ExceptionUtil.checkNotFoundWithId(repository.delete(id, userId), id);
     }
 
     @Override
@@ -35,7 +37,8 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public Contact update(Contact contact, int userId) {
-        return repository.save(contact, userId);
+
+        return ExceptionUtil.checkNotFoundWithId(repository.save(contact, userId), contact.getId());
     }
 
     @Override

@@ -1,0 +1,94 @@
+package com.matcher;
+
+import com.dto.JsonUtil;
+import org.junit.Assert;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+public class ModelMatcher<T> {
+
+    protected Class<T> entityClass;
+
+    public ModelMatcher(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
+
+    private static class EntityWrapper<T> {
+        private T entity;
+
+        private EntityWrapper(T entity) {
+            this.entity = entity;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            EntityWrapper<T> that = (EntityWrapper<T>) o;
+            return entity != null ? entity.equals(that.entity) : that.entity == null;
+        }
+
+        @Override
+        public String toString() {
+            return JsonUtil.writeValue(entity);
+        }
+    }
+
+    private T fromJsonValue(String json) {
+        return JsonUtil.readValue(json, entityClass);
+    }
+
+    private Collection<T> fromJsonValues(String json) {
+        return JsonUtil.readValues(json, entityClass);
+    }
+
+    public void assertEquals(T expected, T actual) {
+        Assert.assertEquals(new EntityWrapper<>(expected), new EntityWrapper<>(actual));
+    }
+
+    public void assertCollectionEquals(Collection<T> expected, Collection<T> actual) {
+        Assert.assertEquals(map(expected), map(actual));
+    }
+
+    public List<EntityWrapper<T>> map(Collection<T> collection) {
+        return collection.stream().map(EntityWrapper::new).collect(Collectors.toList());
+    }
+
+    public ResultMatcher contentMatcher(T expect) {
+        return content().string(
+                new TestMatcher<T>(expect) {
+                    @Override
+                    protected boolean compare(T expected, String body) {
+                        EntityWrapper<T> expectedForCompare = new EntityWrapper<>(expected);
+                        EntityWrapper<T> actualForCompare = new EntityWrapper<>(fromJsonValue(body));
+                        return expectedForCompare.equals(actualForCompare);
+                    }
+                });
+    }
+
+    public final ResultMatcher contentListMatcher(T... expected) {
+        return contentListMatcher(Arrays.asList(expected));
+    }
+
+    public final ResultMatcher contentListMatcher(List<T> expected) {
+        return content().string(new TestMatcher<List<T>>(expected) {
+            @Override
+            protected boolean compare(List<T> expected, String actual) {
+                List<EntityWrapper<T>> expectedList = map(expected);
+                List<EntityWrapper<T>> actualList = map(fromJsonValues(actual));
+                return expectedList.equals(actualList);
+            }
+        });
+    }
+
+    public T fromJsonAction(ResultActions action) throws UnsupportedEncodingException {
+        return fromJsonValue(TestUtil.getContent(action));
+    }
+}
