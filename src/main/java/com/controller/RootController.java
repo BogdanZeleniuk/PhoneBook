@@ -35,7 +35,7 @@ public class RootController extends AbstractUserController{
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public String login(ModelMap model,
                         @RequestParam(value = "error", required = false) boolean error,
-                        @RequestParam(value = "message", required = false) boolean message){
+                        @RequestParam(value = "message", required = false) String message){
         model.put("error", error);
         model.put("message", message);
         return "login";
@@ -63,9 +63,10 @@ public class RootController extends AbstractUserController{
             try {
                 super.create(UserUtil.createNewUserFromDTO(userDTO));
                 status.setComplete();
-                return "login";
+                return "redirect:login?message=registered";
             } catch (DataIntegrityViolationException ex) {
-                result.rejectValue("login", "User with such login is presented");
+                result.rejectValue("login", "duplicate.login");
+                return "redirect:login?error=true";
             }
         }
         model.addAttribute("register", true);

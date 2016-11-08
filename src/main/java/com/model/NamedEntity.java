@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
 public class NamedEntity extends BaseEntity {
 
     @NotEmpty (message = "Password should not be empty")
-    @Column(name = "login", nullable = false)
+    @Column(name = "login", nullable = false, unique=true)
     @Pattern(regexp = "[a-zA-Z]{3,50}", message = "Only English letters")
     @Length(min = 3, max = 50, message = "More than 3 symbols")
     @JsonView(View.REST.class)

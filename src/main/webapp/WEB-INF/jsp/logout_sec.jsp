@@ -3,7 +3,7 @@
 <body>
 <div class="jumbotron">
         <div class="container">
-            <a href="login">Home</a>
+            <a href="login"><strong>Home</strong></a>
             <br/> <br/> <br/>
                <h1> Thank you for using my project. Buy, buy!!!!! </h1>
         </div>

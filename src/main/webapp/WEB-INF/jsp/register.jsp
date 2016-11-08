@@ -12,18 +12,20 @@
     <div class="shadow">
         <ul class="nav navbar-nav navbar-left">
             <li>
+                <h4>Please, set your login and password to continue!</h4>
+                <br/>
                 <c:url value="/j_spring_security_check" var="loginUrl"/>
                 <form:form class="form-horizontal" role="form" action="${loginUrl}"
                            method="post">
                     <div class="form-group">
-                        <label class="control-label col-sm-1" for="username"> Login: </label>
-                        <div class="col-sm-11">
+                        <label class="control-label col-sm-3" for="username"> Login: </label>
+                        <div class="col-sm-10">
                             <input type="text" placeholder="Login" class="form-control" name='username' id="username">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-1" for="password"> Password: </label>
-                        <div class="col-sm-11">
+                        <label class="control-label col-sm-3" for="password"> Password: </label>
+                        <div class="col-sm-10">
                             <input type="password" placeholder="Password" class="form-control" name='password' id="password">
                         </div>
                     </div>
@@ -41,7 +43,9 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-
+            <div class="nav navbar-nav navbar-left">
+            <h4>Please, fulfill the next form:</h4>
+            <br/>
             <div class="view-box">
                 <form:form modelAttribute="userDTO" class="form-horizontal" method="post"
                            action="register" charset="utf-8"
@@ -58,6 +62,7 @@
                     </div>
                 </form:form>
             </div>
+                </div>
         </div>
     </div>
 </div>

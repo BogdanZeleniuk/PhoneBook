@@ -70,7 +70,7 @@ public class JPAConfig {
     @Bean(name = "messageSource")
     public ReloadableResourceBundleMessageSource messageSource(){
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:validation");
+        messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }

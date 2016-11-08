@@ -77,14 +77,14 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="firstName" class="control-label col-xs-3">First name</label>
+                        <label for="firstName" class="control-label col-xs-3">First name(*)</label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Gates">
+                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Gates"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lastName" class="control-label col-xs-3">Last name</label>
+                        <label for="lastName" class="control-label col-xs-3">Last name(*)</label>
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="lastName" name="lastName"
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="patronymic" class="control-label col-xs-3">Patronymic</label>
+                        <label for="patronymic" class="control-label col-xs-3">Patronymic(*)</label>
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="patronymic" name="patronymic"
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="mobilePhone" class="control-label col-xs-3">Mobile Phone</label>
+                        <label for="mobilePhone" class="control-label col-xs-3">Mobile Phone(*)</label>
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="mobilePhone" name="mobilePhone"
@@ -136,6 +136,8 @@
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
+                    <h7>-Check your information if the data were not sent to the server</h7><br/>
+                    <h7>-The marked with * fields are obligatory for filling</h7>
                 </form:form>
             </div>
         </div>
