@@ -1,9 +1,15 @@
 package com.config;
 
+import com.Profiles;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -24,7 +30,17 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class JPAConfig {
 
+    @Autowired
+    Environment env;
+
+    @Profile(Profiles.FILE)
     @Bean
+    public Gson gson() {
+        return new GsonBuilder().setPrettyPrinting().create();
+    }
+
+    @Bean
+    @Profile(Profiles.JPA)
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
@@ -45,6 +61,7 @@ public class JPAConfig {
     }
 
     @Bean
+    @Profile(Profiles.JPA)
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
@@ -53,11 +70,13 @@ public class JPAConfig {
     }
 
     @Bean
+    @Profile(Profiles.JPA)
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
     @Bean
+    @Profile(Profiles.MYSQL)
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -76,6 +95,7 @@ public class JPAConfig {
     }
 
     @Bean
+    @Profile(Profiles.MYSQL)
     public DataSourceInitializer dataSourceInitializer(DataSource dataSource){
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
@@ -88,6 +108,7 @@ public class JPAConfig {
     }
 
     @Bean
+    @Profile(Profiles.MYSQL)
     public static PropertyPlaceholderConfigurer placeHolderConfigurer(){
         final PropertyPlaceholderConfigurer props = new PropertyPlaceholderConfigurer();
         props.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE );

@@ -1,7 +1,9 @@
 package com.repository.contact;
 
+import com.Profiles;
 import com.model.Contact;
 import com.model.User;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
+@Profile({Profiles.JPA, Profiles.MYSQL})
 public class ContactRepositoryImpl implements ContactRepository {
 
     @PersistenceContext

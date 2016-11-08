@@ -1,8 +1,10 @@
 package com.repository.user;
 
+import com.Profiles;
 import com.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
+@Profile({Profiles.JPA, Profiles.MYSQL})
 public class UserRepositoryImpl implements UserRepository{
 
     private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryImpl.class);
