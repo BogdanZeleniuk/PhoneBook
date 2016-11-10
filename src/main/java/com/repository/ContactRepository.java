@@ -1,4 +1,4 @@
-package com.repository.contact;
+package com.repository;
 
 
 import com.model.Contact;

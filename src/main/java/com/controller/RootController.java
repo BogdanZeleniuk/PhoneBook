@@ -4,6 +4,7 @@ import com.controller.user.AbstractUserController;
 import com.dto.UserDTO;
 import com.dto.UserUtil;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -28,6 +29,7 @@ public class RootController extends AbstractUserController{
     }
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String contactList() {
         return "contacts";
     }

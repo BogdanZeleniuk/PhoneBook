@@ -1,8 +1,10 @@
-package com.repository.contact;
+package com.repository.mysql_jpa.contact;
 
 import com.Profiles;
 import com.model.Contact;
 import com.model.User;
+import com.repository.ContactRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
+@Primary
 @Profile({Profiles.JPA, Profiles.MYSQL})
 public class ContactRepositoryImpl implements ContactRepository {
 

@@ -1,15 +1,11 @@
 package com.config;
 
 import com.Profiles;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -22,21 +18,26 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
 public class JPAConfig {
 
-    @Autowired
-    Environment env;
-
-    @Profile(Profiles.FILE)
     @Bean
-    public Gson gson() {
-        return new GsonBuilder().setPrettyPrinting().create();
+    @Resource
+    @Profile(Profiles.FILE)
+    public File getOrCreateFile() throws IOException {
+        File file = new File("D:\\Project\\PhoneBook\\fileJSON.json");
+        if (!file.exists()){
+            file.createNewFile();
+        }
+        return file;
     }
 
     @Bean

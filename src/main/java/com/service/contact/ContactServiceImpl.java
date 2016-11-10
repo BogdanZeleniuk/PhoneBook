@@ -1,14 +1,17 @@
 package com.service.contact;
 
+import com.Profiles;
 import com.controller.exception.ExceptionUtil;
 import com.model.Contact;
-import com.repository.contact.ContactRepository;
+import com.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Profile({Profiles.ACTIVE_DB, Profiles.DB_IMPLEMENTATION})
 public class ContactServiceImpl implements ContactService{
 
     @Autowired

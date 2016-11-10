@@ -4,7 +4,7 @@ import com.AuthorizedUser;
 import com.dto.UserDTO;
 import com.dto.UserUtil;
 import com.model.User;
-import com.repository.user.UserRepository;
+import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

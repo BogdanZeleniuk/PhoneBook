@@ -5,7 +5,7 @@ public class Profiles {
             MYSQL = "mysql",
             FILE = "file",
             JPA = "jpa",
-            DATAJPA = "datajpa";
+            MOCK = "mock";
 
     public static final String ACTIVE_DB = MYSQL;
     public static final String DB_IMPLEMENTATION = JPA;
